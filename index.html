@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playing schedule generator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        
+        #output {
+            font-size: 13pt;
+        }
+    </style>
+</head>
+<body>    
+<script>
+    function create() {
+        document.getElementById("output").value = "";
+        var n = document.getElementById("input").value;
+        if (n < 0) {
+            n *= -1;
+        }
+        if (n % 2 != 0) {
+            n++;
+        }
+        var SA = [];
+        for (i=1; i<= n; i++) {
+           var z = parseInt(i);
+            SA.push(z);
+        }
+        var HA = SA.slice();
+        for (i=0; i<=(n-2); i++) {
+            var a = 0;
+            var b = n - 1;
+            for (c=1; c<=(n/2); c++) {
+                document.getElementById("output").value += SA[a] + " - " + SA[b] + "\n";
+                a++;
+                b--;
+            }
+            SA[1] = HA[n-1];
+            x = 2;
+            if (document.getElementById("roundseparation").checked == true) {
+                document.getElementById("output").value += "----\n";
+            }
+            for (y=1; y<=(n-1); y++) {
+                SA[x] = HA[y];
+                x++;
+            }
+            HA = SA.slice();
+        }
+    }
+</script>
+    
+    <h1>Playing schedule generator</h1>
+    <label for="input">Number of teams: </label>
+    <br>
+    <input type="number" id="input">
+    <button onclick="create()">Output</button>
+    <br>
+    <input type="checkbox" id="roundseparation" checked><label for="roundseparation">Round separation</label>
+    <br><br>
+    <textarea id="output" cols="10" rows="20"></textarea>
+    
+</body>
+</html>
